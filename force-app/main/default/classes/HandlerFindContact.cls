@@ -22,13 +22,12 @@ public with sharing class HandlerFindContact implements BotHandler {
             system.debug('a message');
 
         for(int i = 0; i<10; i++){
-            if(!Contact.getSObjectType().getDescribe().isAccessible()){
-                return;
+            if(Contact.getSObjectType().getDescribe().isAccessible()){
+                tempContact = [SELECT Id, Name, MobilePhone FROM Contact
+                WHERE Name LIKE :key
+                ORDER BY Name
+                LIMIT 1];      
             }
-            tempContact = [SELECT Id, Name, MobilePhone FROM Contact
-             WHERE Name LIKE :key
-             ORDER BY Name
-             LIMIT 1];            
         }
             
         return new BotResponse(new BotMessage('Bot', 'Here is a list of contacts matching "' + params[0] + '":', records));
