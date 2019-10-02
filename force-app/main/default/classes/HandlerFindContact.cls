@@ -2,6 +2,8 @@ public with sharing class HandlerFindContact implements BotHandler {
     
     public BotResponse handle(String utterance, String[] params, Map<String, String> session, String fileName, String fileContent) {
         String key = '%' + params[0] + '%';
+        Contact tempContact;
+
         List<Contact> contacts = 
             [SELECT Id, Name, MobilePhone FROM Contact
              WHERE Name LIKE :key
@@ -16,6 +18,16 @@ public with sharing class HandlerFindContact implements BotHandler {
             fields.add(new BotField('Phone', c.MobilePhone, 'tel:' + c.MobilePhone));
             records.add(new BotRecord(fields));
         }
+        if(records.isEmpty())
+            system.debug('a message');
+
+        for(int i = 0; i<10; i++){
+            tempContact = [SELECT Id, Name, MobilePhone FROM Contact
+             WHERE Name LIKE :key
+             ORDER BY Name
+             LIMIT 1];
+        }
+            
         return new BotResponse(new BotMessage('Bot', 'Here is a list of contacts matching "' + params[0] + '":', records));
         
     }
