@@ -22,7 +22,8 @@ public with sharing class HandlerFindContact implements BotHandler {
             system.debug('a message');
 
         for(int i = 0; i<10; i++){
-            if(Contact.getSObjectType().getDescribe().isAccessible()){
+            if(Contact.getSObjectType().getDescribe().isAccessible() && Schema.SObjectType.Contact.fields.Id.isAccessible() && Schema.SObjectType.Contact.fields.Name.isAccessible()
+            && Schema.SObjectType.Contact.fields.MobilePhone.isAccessible()) {
                 tempContact = [SELECT Id, Name, MobilePhone FROM Contact
                 WHERE Name LIKE :key
                 ORDER BY Name
