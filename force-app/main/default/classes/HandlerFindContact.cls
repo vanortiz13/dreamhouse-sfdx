@@ -4,11 +4,14 @@ public with sharing class HandlerFindContact implements BotHandler {
         String key = '%' + params[0] + '%';
         Contact tempContact;
 
-        List<Contact> contacts = 
-            [SELECT Id, Name, MobilePhone FROM Contact
-             WHERE Name LIKE :key
-             ORDER BY Name
-             LIMIT 5];
+        if(Contact.getSObjectType().getDescribe().isAccessible() && Schema.SObjectType.Contact.fields.Id.isAccessible() && Schema.SObjectType.Contact.fields.Name.isAccessible()
+            && Schema.SObjectType.Contact.fields.MobilePhone.isAccessible()) {
+            List<Contact> contacts = 
+                [SELECT Id, Name, MobilePhone FROM Contact
+                WHERE Name LIKE :key
+                ORDER BY Name
+                LIMIT 5];
+        }
         
         List<BotRecord> records = new List<BotRecord>();
         
