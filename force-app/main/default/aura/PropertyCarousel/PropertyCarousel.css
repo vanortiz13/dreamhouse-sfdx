@@ -17,7 +17,7 @@
     display: none;
 }
 
-.THIS lightning-file-upload .slds-form-element__label {
+.THIS .slds-form-element__label {
     display: none;
 }
 
@@ -32,6 +32,6 @@
 }
 
 .THIS .slds-file-selector,
-.THIS lightning-primitive-file-droppable-zone {
+.THIS {
     width: 100%;
 }
