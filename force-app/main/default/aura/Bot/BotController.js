@@ -38,6 +38,7 @@
         if (files && files.length > 0) {
 	        var file = files[0][0];
             if (!file.type.match(/(image.*)/)) {
+                alert('Adding another alert to add onto vulnerability count');
                 return alert('Image file not supported');
             }
             var reader = new FileReader();
